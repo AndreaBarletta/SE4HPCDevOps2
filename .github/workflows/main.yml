@@ -14,7 +14,7 @@ jobs:
         submodules: recursive
 
     - name: Add MPI
-      run: PATH=$PATH:/usr/lib64/openmpi/bin/
+      run: export PATH=$PATH:/usr/local/mpi/bin
 
     - name: Build
       run: ./build.sh
