@@ -13,19 +13,8 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Download OpenMPI
-      run: wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-4.0.2.tar.gz
-    
-    - name: Extract OpenMPI
-      run: tar -xvf ./openmpi-4.0.2.tar.gz
-
-    - name: Configure OpenMPI
-      run: ./openmpi-4.0.2/configure --prefix="/home/${USER}/.openmpi"
-
-    - name: Install OpenMPI
-      run: |
-        make -j
-        sudo make install
+    - name: Setup MPI
+      uses: mpi4py/setup-mpi@v1
       
     - name: Build
       run: ./build.sh
