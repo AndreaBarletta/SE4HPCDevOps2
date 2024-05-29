@@ -1,0 +1,21 @@
+name: C++ CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Build
+      run: ./build.sh
+
+    - name: Run tests
+      working-directory: ./build
+      run: ./test_multiplication
