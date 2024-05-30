@@ -1,15 +1,31 @@
-Bootstrap: yum
-OSVersion: 8
-MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
-Include: yum
+Bootstrap: docker
+From: centos:latest
+IncludeCmd: yes
 
-%post
-    git clone --recurse-submodule https://github.com/AndreaBarletta/SE4HPCDevOps2.git
-    cd SE4HPCDevOps2
-    sudo yum install openmpi-devel
+# In container after OS install
+%pos
+    # Update yum mirrorlinks
+    cd /etc/yum.repos.d/
+    sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+    # Install git
+    yum install git -y
+    # Install OpenMPI
+    yum install openmpi-devel -y
+    # Load OpenMPI module
+    . /etc/profile
     module load mpi
+    # Install CMake
+    yum install cmake -y
+    # Clone repo
+    cd ~
+    git clone --recurse-submodule https://github.com/AndreaBarletta/SE4HPCDevOps2.git
+    # Build 
+    cd SE4HPCDevOps2
     ./build.sh
 
+# In container when run
 %runscript
-    cd build
+    # Run tests
+    cd SE4HPCDevOps2/build
     ./test_multiplication
