@@ -19,10 +19,6 @@ jobs:
     - name: Build
       run: ./build.sh
 
-    - name: Run main
-      working-directory: ./build
-      run: mpirun -np 2 ./main
-
     - name: Run tests
       working-directory: ./build
       run: ./test_multiplication
