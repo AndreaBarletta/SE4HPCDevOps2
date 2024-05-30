@@ -79,6 +79,7 @@ int main(int argc, char** argv) {
         }
     }
 
+    // just to check
     MPI_Finalize();
     return 0;
 }
