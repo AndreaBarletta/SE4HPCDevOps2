@@ -19,6 +19,10 @@ jobs:
     - name: Build
       run: ./build.sh
 
+    - name: Print build content
+      working-directory: ./build
+      run: ls
+
     - name: Run tests
       working-directory: ./build
       run: ./test_multiplication
