@@ -21,7 +21,7 @@ jobs:
 
     - name: Run main
       working-directory: ./build
-      run: ./main
+      run: mpirun -np 2 ./main
 
     - name: Run tests
       working-directory: ./build
