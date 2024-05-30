@@ -1,0 +1,41 @@
+BootStrap: docker
+From: ubuntu:20.04
+
+%labels
+    Maintainer BKR
+    Version 1.0
+
+%environment
+    export LC_ALL=C
+    export LANG=C
+
+%post
+    # Install dependencies
+    apt-get update && apt-get install -y \
+        build-essential \
+        cmake \
+        mpi-default-bin \
+        mpi-default-dev \
+        gcc \
+        g++
+
+
+    # Run the buil 
+    
+    
+    
+    
+    
+    
+    
+    
+    d script
+    chmod +x build.sh
+    ./build.sh
+
+%test
+    cd /opt/matrix_multiplication/build
+    ./test_multiplication
+
+%runscript
+    exec /opt/matrix_multiplication/build/main "$@"
