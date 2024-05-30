@@ -1,8 +1,8 @@
-Bootstrap: docker
-From: centos:latest
-IncludeCmd: yes
+BootStrap: yum
+OSVersion: 7
+MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/x86_64/
+Include: yum
 
-# In container after OS install
 %post
     # Update yum mirrorlinks
     cd /etc/yum.repos.d/
@@ -17,19 +17,10 @@ IncludeCmd: yes
     module load mpi
     # Install g++
     yum install gcc-c++.x86_64 -y
-    # Install CMake
-    yum install cmake -y
     # Clone repo
-    cd ~
+    cd /usr/local
     git clone --recurse-submodule https://github.com/AndreaBarletta/SE4HPCDevOps2.git
-    # Build 
-    cd SE4HPCDevOps2
-    ./build.sh
-    ls
 
-# In container when run
 %runscript
-    # Run tests
-    # exec "ls"
-    # cd ~/SE4HPCDevOps2/build
+    # cd /usr/local/SE4HPCDevOps2/build
     # ./test_multiplication
