@@ -2,6 +2,9 @@ Bootstrap: library
 From: library/default/centos:8
 
 %post
+    # Update mirrorlist
+    sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
     # Install cmake3
     yum install cmake3 -y
     # Install git
