@@ -31,4 +31,4 @@ jobs:
         sudo apt-get install -y singularity-container
 
     - name: Build container
-      run: singularity build container.sif container.def
+      run: sudo singularity build container.sif container.def
