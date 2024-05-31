@@ -46,7 +46,7 @@ jobs:
         cd ./builddir
         sudo make
         sudo make install
-        singularity version
+        sudo apt install dnf
         
     - name: Build container
       run: sudo singularity build container.sif container.def
