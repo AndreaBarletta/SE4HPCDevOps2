@@ -1,6 +1,5 @@
-BootStrap: yum
-MirrorURL: http://mirror.centos.org/centos/8-stream/BaseOS/x86_64/os/
-Include: yum
+Bootstrap: library
+From: vallee/centos/8
 
 %post
     # Install cmake3
