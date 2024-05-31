@@ -51,6 +51,7 @@ jobs:
       run: |
         sudo apt install dnf
         sudo touch /root/.rpmmacros
+        sudo chmod 777 /root/.rpmmacros
         sudo echo '%_var /var' >> /root/.rpmmacros
         sudo echo '%_dbpath %{_var}/lib/rpm' >> /root/.rpmmacros
         
