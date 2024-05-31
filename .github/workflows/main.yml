@@ -43,7 +43,7 @@ jobs:
         echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
         echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
         source ~/.bashrc
-        go get -u github.com/golang/dep/cmd/dep
+        go install -u github.com/golang/dep/cmd/dep
         
     - name: Install singularity
       run: |
