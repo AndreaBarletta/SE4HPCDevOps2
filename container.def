@@ -1,5 +1,5 @@
 Bootstrap: library
-From: vallee/centos/8
+From: library/default/centos:8
 
 %post
     # Install cmake3
