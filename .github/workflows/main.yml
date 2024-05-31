@@ -48,12 +48,7 @@ jobs:
         sudo make install
 
     - name: Fix for building the container
-      run: |
-        sudo apt install dnf
-        sudo touch /.rpmmacros
-        sudo chmod 777 /.rpmmacros
-        sudo echo '%_var /var' >> /.rpmmacros
-        sudo echo '%_dbpath %{_var}/lib/rpm' >> /.rpmmacros
+      run: sudo apt install -y yum
         
     - name: Build container
       run: sudo singularity build container.sif container.def
