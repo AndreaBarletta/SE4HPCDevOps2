@@ -50,10 +50,10 @@ jobs:
     - name: Fix for building the container
       run: |
         sudo apt install dnf
-        sudo touch /root/.rpmmacros
-        sudo chmod 777 /root/.rpmmacros
-        sudo echo '%_var /var' >> /root/.rpmmacros
-        sudo echo '%_dbpath %{_var}/lib/rpm' >> /root/.rpmmacros
+        sudo touch /.rpmmacros
+        sudo chmod 777 /.rpmmacros
+        sudo echo '%_var /var' >> /.rpmmacros
+        sudo echo '%_dbpath %{_var}/lib/rpm' >> /.rpmmacros
         
     - name: Build container
       run: sudo singularity build container.sif container.def
