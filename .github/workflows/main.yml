@@ -13,7 +13,7 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Setup MPI
+    - name: Setup MPI for running tests in action
       uses: mpi4py/setup-mpi@v1
       
     - name: Build
@@ -22,3 +22,6 @@ jobs:
     - name: Run tests
       working-directory: ./build
       run: ./test_multiplication
+
+    - name: Build container
+      run: singularity build container.sif container.def
