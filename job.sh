@@ -5,3 +5,6 @@
 #SBATCH --ntasks=2  # Adjust the number of tasks based on your MPI configuration
 #SBATCH --time=01:00:00  # Adjust the time limit as needed
 #SBATCH --partition=your_partition  # Replace with the appropriate partition for your job
+
+
+# add job
