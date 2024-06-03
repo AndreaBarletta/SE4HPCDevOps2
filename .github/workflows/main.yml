@@ -50,4 +50,4 @@ jobs:
       run: sudo singularity build container.sif container.def
 
     - name: Run test in container
-      run: singularity run container.sif
+      run: singularity exec container.sif mpiexec -np 2 ./main
