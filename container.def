@@ -4,6 +4,7 @@ From: library/default/centos:8
 %environment
     # Add mpiexec to PATH
     export PATH=$PATH:/usr/lib64/openmpi/bin/
+    cd /usr/local/SE4HPCDevOps2/build
 
 %post
     # Update mirrorlist
@@ -32,7 +33,3 @@ From: library/default/centos:8
     # Add perms to run main as user
     cd build
     chmod 777 main
-
-%runscript
-    cd /usr/local/SE4HPCDevOps2/build
-    mpirun -np 2 main > ~/output.txt 2> ~/error.txt
