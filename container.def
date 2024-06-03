@@ -14,6 +14,8 @@ From: library/default/centos:8
     # Load OpenMPI module
     source /etc/profile.d/modules.sh
     module load mpi
+    # Add mpiexec to PATH
+    export PATH=$PATH:/usr/lib64/openmpi/bin/
     # Install g++
     yum install gcc-c++.x86_64 -y
     # Clone repo
@@ -26,6 +28,3 @@ From: library/default/centos:8
     cd build
     chmod 777 test_multiplication
 
-%runscript
-    cd /usr/local/SE4HPCDevOps2/build
-    mpirun -np 2 ./build/main
