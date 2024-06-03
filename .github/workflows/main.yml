@@ -64,6 +64,6 @@ jobs:
         host: ${{ secrets.CLUSTER_HOST }}
         username: ${{ secrets.CLUSTER_USERNAME }}
         password: ${{ secrets.CLUSTER_PASSWORD }}
-        source: "job1.sh"
+        source: "job.sh"
         target: "~"
     
