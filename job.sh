@@ -17,10 +17,14 @@ SIF_FILE="container.sif"
 BIND_PATH=$(pwd)
 
 # Define main file path within the container
-MAIN_FILE="/usr/local/SE4HPCDevOps2/build/main"
+MAIN_PATH="/usr/local/SE4HPCDevOps2/build"
+
+# Output files
+OUTPUT_FILE="~/output.txt"
+ERROR_FILE="~/error.txt"
 
 # Run
-singularity exec --bind /scratch_local:/scratch_local container.sif mpirun -np 2 -wdir /usr/local/SE4HPCDevOps2/build main > ~/output.txt 2> $
+singularity exec --bind /scratch_local:/scratch_local $SIF_FILE mpirun -np $NUM_PROCESSES -wdir $MAIN_PATH main > $OUTPUT_FILE 2> $ERROR_FILE
 
 
 
