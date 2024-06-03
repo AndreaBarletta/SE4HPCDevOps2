@@ -48,14 +48,6 @@ jobs:
         
     - name: Build container
       run: sudo singularity build container.sif container.def
-
-    - name: Commit changes
-      uses: EndBug/add-and-commit@v9
-      with:
-        author_name: AndreaBarletta
-        author_email: 10665046@polimi.it
-        message: 'Add sif test'
-        add: 'container.sif'
       
     - name: Run test in container
       run: singularity run container.sif
