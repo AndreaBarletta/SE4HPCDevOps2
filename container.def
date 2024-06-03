@@ -14,8 +14,6 @@ From: library/default/centos:8
     # Load OpenMPI module
     source /etc/profile.d/modules.sh
     module load mpi
-    # Add mpiexec to PATH
-    export PATH=$PATH:/usr/lib64/openmpi/bin/
     # Install g++
     yum install gcc-c++.x86_64 -y
     # Clone repo
@@ -24,7 +22,11 @@ From: library/default/centos:8
     # Build
     cd /usr/local/SE4HPCDevOps2
     ./build.sh
-    # Add perms to run tests as user
+    # Copy matrixA and matrixB in build folder
+    cp matrixA.txt build/matrixA.txt
+    cp matrixB.txt build/matrixB.txt
+    # Add perms to run main as user
     cd build
-    chmod 777 test_multiplication
-
+    chmod 777 main
+    # Add mpiexec to PATH
+    export PATH=$PATH:/usr/lib64/openmpi/bin/
