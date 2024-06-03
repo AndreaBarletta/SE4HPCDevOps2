@@ -28,4 +28,4 @@ From: library/default/centos:8
 
 %runscript
     cd /usr/local/SE4HPCDevOps2/build
-    mpiexec -np 2 ./main
+    mpirun -np 2 ./build/main
