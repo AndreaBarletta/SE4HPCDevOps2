@@ -23,25 +23,6 @@ jobs:
       working-directory: ./build
       run: ./test_multiplication
 
-    - name: Connect to Cluster Server
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.CLUSTER_HOST }}
-        username: ${{ secrets.CLUSTER_USERNAME }}
-        password: ${{ secrets.CLUSTER_PASSWORD }}
-        #port: ${{ secrets.CLUSTER_PORT }} # Optional, default is 22
-        script: |
-          echo "Connected to cluster server"
-          if [ ! -d "SE4HPCDevOps2" ]; then
-            git clone --recurse-submodule https://github.com/AndreaBarletta/SE4HPCDevOps2.git
-          fi
-          cd SE4HPCDevOps2
-          sbatch job1.sh
-          sleep 30  # Wait for 30 seconds
-          cat output.txt
-          cat error.txt 
-
-
     - name: Install Singularity
       run: |
         sudo apt-get update
@@ -76,3 +57,13 @@ jobs:
         password: ${{ secrets.CLUSTER_PASSWORD }}
         source: "container.sif"
         target: "~"
+        
+    - name: Push SLURM job file to cluster
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.CLUSTER_HOST }}
+        username: ${{ secrets.CLUSTER_USERNAME }}
+        password: ${{ secrets.CLUSTER_PASSWORD }}
+        source: "job1.sh"
+        target: "~"
+    
