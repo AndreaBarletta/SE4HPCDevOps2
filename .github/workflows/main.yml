@@ -66,4 +66,18 @@ jobs:
         password: ${{ secrets.CLUSTER_PASSWORD }}
         source: "job.sh"
         target: "~"
+
+    - name: Start job
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.CLUSTER_HOST }}
+        username: ${{ secrets.CLUSTER_USERNAME }}
+        password: ${{ secrets.CLUSTER_PASSWORD }}
+        script: |
+          sbatch job.sh
+          sleep 5
+          echo "Output:\n"
+          cat output.txt
+          echo "Errors:\n"
+          cat error.txt
     
