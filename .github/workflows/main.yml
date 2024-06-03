@@ -74,10 +74,16 @@ jobs:
         username: ${{ secrets.CLUSTER_USERNAME }}
         password: ${{ secrets.CLUSTER_PASSWORD }}
         script: |
+          rm output.txt
+          rm error.txt
           sbatch job.sh
           sleep 5
-          echo "Output:\n"
+          echo "================================="
+          echo "Output"
+          echo "================================="
           cat output.txt
-          echo "Errors:\n"
+          echo "================================="
+          echo "Errors"
+          echo "================================="
           cat error.txt
     
