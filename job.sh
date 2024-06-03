@@ -19,12 +19,8 @@ BIND_PATH=$(pwd)
 # Define main file path within the container
 MAIN_PATH="/usr/local/SE4HPCDevOps2/build"
 
-# Output files
-OUTPUT_FILE="~/output.txt"
-ERROR_FILE="~/error.txt"
-
 # Run
-singularity exec --bind /scratch_local:/scratch_local $SIF_FILE mpirun -np $NUM_PROCESSES -wdir $MAIN_PATH main > $OUTPUT_FILE 2> $ERROR_FILE
+singularity exec --bind /scratch_local:/scratch_local $SIF_FILE mpirun -np $NUM_PROCESSES -wdir $MAIN_PATH main > ~/output.txt 2> ~/error.txt
 
 
 
