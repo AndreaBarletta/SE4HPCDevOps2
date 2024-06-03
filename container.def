@@ -23,6 +23,7 @@ From: library/default/centos:8
     # Clone repo
     cd /usr/local
     git clone --recurse-submodule https://github.com/AndreaBarletta/SE4HPCDevOps2.git
+    chmod -R 777 SE4HPCDevOps2
     # Build
     cd /usr/local/SE4HPCDevOps2
     ./build.sh
