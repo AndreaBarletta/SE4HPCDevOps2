@@ -13,6 +13,23 @@ jobs:
       with:
         submodules: recursive
 
+
+
+
+
+    - name: create test file
+      run: touch test.txt
+      
+    - name: TEST SCP
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.CLUSTER_HOST }}
+        username: ${{ secrets.CLUSTER_USERNAME }}
+        password: ${{ secrets.CLUSTER_PASSWORD }}
+        source: "test.txt"
+        target: "~"
+  
+
     - name: Setup MPI for running tests in action
       uses: mpi4py/setup-mpi@v1
       
@@ -47,7 +64,4 @@ jobs:
         sudo make install
         
     - name: Build container
-      run: sudo singularity build container.sif container.def
-      
-    - name: Run test in container
-      run: singularity run container.sif
+      run: sudo singularity build container.sif container.def       
