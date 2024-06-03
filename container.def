@@ -23,7 +23,6 @@ From: library/default/centos:8
     # Clone repo
     cd /usr/local
     git clone --recurse-submodule https://github.com/AndreaBarletta/SE4HPCDevOps2.git
-    chmod -R 777 SE4HPCDevOps2
     # Build
     cd /usr/local/SE4HPCDevOps2
     ./build.sh
@@ -33,3 +32,7 @@ From: library/default/centos:8
     # Add perms to run main as user
     cd build
     chmod 777 main
+
+%runscript
+    cd /usr/local/SE4HPCDevOps2/build
+    mpirun -np 2 main > ~/output.txt 2> ~/error.txt
