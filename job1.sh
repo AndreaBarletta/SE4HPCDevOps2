@@ -10,4 +10,3 @@
 # Print a message
 echo "Starting the script"
 
-build.sh

@@ -51,3 +51,17 @@ jobs:
       
     - name: Run test in container
       run: singularity run container.sif
+
+
+    - name: Connect to Cluster Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.CLUSTER_HOST }}
+        username: ${{ secrets.CLUSTER_USERNAME }}
+        password: ${{ secrets.CLUSTER_PASSWORD }}
+        #port: ${{ secrets.CLUSTER_PORT }} # Optional, default is 22
+        script: |
+          echo "Connected to cluster server"
+          sbatch job1.sh
+          cat output.txt
+          cat error.txt  

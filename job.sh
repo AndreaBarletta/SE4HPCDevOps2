@@ -8,7 +8,7 @@ STDOUT_FILE="output.txt"
 STDERR_FILE="error.txt"
 
 # Define the path to the Singularity Image File
-SIF_FILE="myimage.sif"
+SIF_FILE="my_image.sif"
 
 # Run the application within the Singularity container using MPI
 singularity exec "$SIF_FILE" mpirun -np $NUM_PROCESSES main > "$STDOUT_FILE" 2> "$STDERR_FILE"
