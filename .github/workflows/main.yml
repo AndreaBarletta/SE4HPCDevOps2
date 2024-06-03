@@ -37,7 +37,9 @@ jobs:
           fi
           cd SE4HPCDevOps2
           sbatch job1.sh
-          #cat output.txt
+          sleep 30  # Wait for 30 seconds
+          echo "output:"
+          cat output.txt
           #cat error.txt 
 
 
