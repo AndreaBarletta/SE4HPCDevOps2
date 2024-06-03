@@ -1,6 +1,10 @@
 Bootstrap: library
 From: library/default/centos:8
 
+%environment
+    # Add mpiexec to PATH
+    export PATH=$PATH:/usr/lib64/openmpi/bin/
+
 %post
     # Update mirrorlist
     sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
@@ -28,5 +32,3 @@ From: library/default/centos:8
     # Add perms to run main as user
     cd build
     chmod 777 main
-    # Add mpiexec to PATH
-    export PATH=$PATH:/usr/lib64/openmpi/bin/
