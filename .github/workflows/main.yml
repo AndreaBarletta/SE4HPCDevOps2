@@ -96,6 +96,7 @@ jobs:
           host: ${{ secrets.CLUSTER_HOST }}
           username: ${{ secrets.CLUSTER_USERNAME }}
           insecure_password: ${{ secrets.CLUSTER_PASSWORD }}
+          fingerprint: ${{ secrets.CLUSTER_FINGERPRINT }}
           source: |
             ~/output.txt
             ~/error.txt
