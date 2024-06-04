@@ -1,5 +1,5 @@
-login10:rank1.main: unknown link width 0x10
 login10:rank0.main: unknown link width 0x10
+login10:rank1.main: unknown link width 0x10
 Congratulations, bro. Here is your resultant matrix C:
 561 551 664 527 526 638 475 516 455 487 597 454 609 553 483 614 490 570 492 559 561 467 476 445 451 519 664 505 498 537 
 576 692 726 594 545 720 471 644 581 589 694 597 731 640 529 685 572 669 524 753 763 494 552 498 541 719 659 692 564 659 
