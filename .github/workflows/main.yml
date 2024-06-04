@@ -97,10 +97,10 @@ jobs:
           username: ${{ secrets.CLUSTER_USERNAME }}
           insecure_password: ${{ secrets.CLUSTER_PASSWORD }}
           fingerprint: ${{ secrets.CLUSTER_FINGERPRINT }}
-          source: output.txt;error.txt
+          source: output.txt
+          target: error.txt
 
     - name: Print results
       run: |
         cat output.txt
-        cat error.txt
               
