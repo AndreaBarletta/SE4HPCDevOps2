@@ -98,8 +98,8 @@ jobs:
           insecure_password: ${{ secrets.CLUSTER_PASSWORD }}
           fingerprint: ${{ secrets.CLUSTER_FINGERPRINT }}
           source: |
-            ~/output.txt
-            ~/error.txt
+            output.txt
+            error.txt
           target: "~"
 
     - name: Print results
