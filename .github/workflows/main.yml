@@ -13,97 +13,97 @@ jobs:
       with:
         submodules: recursive  
 
-    - name: Setup MPI for running tests in action
-      uses: mpi4py/setup-mpi@v1
+    # - name: Setup MPI for running tests in action
+    #   uses: mpi4py/setup-mpi@v1
       
-    - name: Build
-      run: ./build.sh
+    # - name: Build
+    #   run: ./build.sh
 
-    - name: Run tests
-      working-directory: ./build
-      run: ./test_multiplication
+    # - name: Run tests
+    #   working-directory: ./build
+    #   run: ./test_multiplication
 
-    - name: Install Singularity
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential libseccomp-dev pkg-config squashfs-tools cryptsetup
-        export VERSION=1.13.15 OS=linux ARCH=amd64
-        sudo wget -O /tmp/go${VERSION}.${OS}-${ARCH}.tar.gz https://dl.google.com/go/go${VERSION}.${OS}-${ARCH}.tar.gz
-        sudo tar -C /usr/local -xzf /tmp/go${VERSION}.${OS}-${ARCH}.tar.gz
-        sudo echo 'export GOPATH=${HOME}/go' >> ~/.bashrc
-        sudo echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc
-        source ~/.bashrc
-        sudo curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh |
-        sudo sh -s -- -b $(go env GOPATH)/bin v1.21.0
-        sudo mkdir -p ${GOPATH}/src/github.com/sylabs
-        cd ${GOPATH}/src/github.com/sylabs
-        sudo git clone https://github.com/sylabs/singularity.git
-        cd singularity
-        sudo git checkout v3.6.3
-        cd ${GOPATH}/src/github.com/sylabs/singularity
-        sudo ./mconfig
-        cd ./builddir
-        sudo make
-        sudo make install
+    # - name: Install Singularity
+    #   run: |
+    #     sudo apt-get update
+    #     sudo apt-get install -y build-essential libseccomp-dev pkg-config squashfs-tools cryptsetup
+    #     export VERSION=1.13.15 OS=linux ARCH=amd64
+    #     sudo wget -O /tmp/go${VERSION}.${OS}-${ARCH}.tar.gz https://dl.google.com/go/go${VERSION}.${OS}-${ARCH}.tar.gz
+    #     sudo tar -C /usr/local -xzf /tmp/go${VERSION}.${OS}-${ARCH}.tar.gz
+    #     sudo echo 'export GOPATH=${HOME}/go' >> ~/.bashrc
+    #     sudo echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc
+    #     source ~/.bashrc
+    #     sudo curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh |
+    #     sudo sh -s -- -b $(go env GOPATH)/bin v1.21.0
+    #     sudo mkdir -p ${GOPATH}/src/github.com/sylabs
+    #     cd ${GOPATH}/src/github.com/sylabs
+    #     sudo git clone https://github.com/sylabs/singularity.git
+    #     cd singularity
+    #     sudo git checkout v3.6.3
+    #     cd ${GOPATH}/src/github.com/sylabs/singularity
+    #     sudo ./mconfig
+    #     cd ./builddir
+    #     sudo make
+    #     sudo make install
         
-    - name: Build container
-      run: sudo singularity build container.sif container.def    
+    # - name: Build container
+    #   run: sudo singularity build container.sif container.def    
 
 
-    - name: Push container to cluster
-      uses: nicklasfrahm/scp-action@main
-      with:
-          direction: upload
-          host: ${{ secrets.CLUSTER_HOST }}
-          username: ${{ secrets.CLUSTER_USERNAME }}
-          insecure_password: ${{ secrets.CLUSTER_PASSWORD }}
-          fingerprint: ${{ secrets.CLUSTER_FINGERPRINT }}
-          source: container.sif
-          target: container.sif
+    # - name: Push container to cluster
+    #   uses: nicklasfrahm/scp-action@main
+    #   with:
+    #       direction: upload
+    #       host: ${{ secrets.CLUSTER_HOST }}
+    #       username: ${{ secrets.CLUSTER_USERNAME }}
+    #       insecure_password: ${{ secrets.CLUSTER_PASSWORD }}
+    #       fingerprint: ${{ secrets.CLUSTER_FINGERPRINT }}
+    #       source: container.sif
+    #       target: container.sif
         
-    - name: Push SLURM job file to cluster
-      uses: nicklasfrahm/scp-action@main
-      with:
-          direction: upload
-          host: ${{ secrets.CLUSTER_HOST }}
-          username: ${{ secrets.CLUSTER_USERNAME }}
-          insecure_password: ${{ secrets.CLUSTER_PASSWORD }}
-          fingerprint: ${{ secrets.CLUSTER_FINGERPRINT }}
-          source: job.sh
-          target: job.sh
+    # - name: Push SLURM job file to cluster
+    #   uses: nicklasfrahm/scp-action@main
+    #   with:
+    #       direction: upload
+    #       host: ${{ secrets.CLUSTER_HOST }}
+    #       username: ${{ secrets.CLUSTER_USERNAME }}
+    #       insecure_password: ${{ secrets.CLUSTER_PASSWORD }}
+    #       fingerprint: ${{ secrets.CLUSTER_FINGERPRINT }}
+    #       source: job.sh
+    #       target: job.sh
 
-    - name: Execute job on cluster
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.CLUSTER_HOST }}
-        username: ${{ secrets.CLUSTER_USERNAME }}
-        password: ${{ secrets.CLUSTER_PASSWORD }}
-        script: |
-          rm output.txt
-          rm error.txt
-          job_id=$(sbatch job.sh | grep -oP '[0-9]*')
-          completed=false
-          while [ "$completed" = false ]; do
-              job_status=$(scontrol show job $job_id)
-              if [[ "$job_status" == *"COMPLETED"* ]]; then
-                  completed=true
-              else
-                  sleep 0.1
-              fi
-          done
+    # - name: Execute job on cluster
+    #   uses: appleboy/ssh-action@v1.0.3
+    #   with:
+    #     host: ${{ secrets.CLUSTER_HOST }}
+    #     username: ${{ secrets.CLUSTER_USERNAME }}
+    #     password: ${{ secrets.CLUSTER_PASSWORD }}
+    #     script: |
+    #       rm output.txt
+    #       rm error.txt
+    #       job_id=$(sbatch job.sh | grep -oP '[0-9]*')
+    #       completed=false
+    #       while [ "$completed" = false ]; do
+    #           job_status=$(scontrol show job $job_id)
+    #           if [[ "$job_status" == *"COMPLETED"* ]]; then
+    #               completed=true
+    #           else
+    #               sleep 0.1
+    #           fi
+    #       done
           
-          echo "DONE"
+    #       echo "DONE"
 
     - name: Get output file
       uses: nicklasfrahm/scp-action@main
       with:
-          direction: download
-          host: ${{ secrets.CLUSTER_HOST }}
-          username: ${{ secrets.CLUSTER_USERNAME }}
-          insecure_password: ${{ secrets.CLUSTER_PASSWORD }}
-          fingerprint: ${{ secrets.CLUSTER_FINGERPRINT }}
-          source: output.txt
-          target: output.txt
+        direction: download
+        host: ${{ secrets.CLUSTER_HOST }}
+        username: ${{ secrets.CLUSTER_USERNAME }}
+        insecure_password: ${{ secrets.CLUSTER_PASSWORD }}
+        fingerprint: ${{ secrets.CLUSTER_FINGERPRINT }}
+        source: output.txt
+        target: output.txt
           
     - name: Get error file
       uses: nicklasfrahm/scp-action@main
@@ -126,4 +126,11 @@ jobs:
         echo "Errors"
         echo "==================================="
         cat error.txt
-              
+
+    - name: Add output and error files to repo
+      uses: EndBug/add-and-commit@v9
+      with:
+        author_name: github_action
+        author_email: github_action
+        message: 'add output and error files'
+        add: "['output.txt','error.txt']"
