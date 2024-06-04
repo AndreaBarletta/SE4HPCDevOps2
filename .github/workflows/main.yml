@@ -90,5 +90,19 @@ jobs:
           echo "DONE"
 
     - name: Get results
-      run: echo "GETTIGN RESULTS"
+      uses: nicklasfrahm/scp-action@main
+      with:
+          direction: download
+          host: ${{ secrets.CLUSTER_HOST }}
+          username: ${{ secrets.CLUSTER_USERNAME }}
+          insecure_password: ${{ secrets.CLUSTER_PASSWORD }}
+          source: |
+            ~/output.txt
+            ~/error.txt
+          target: "~"
+
+    - name: Print results
+      run: |
+        cat output.txt
+        cat error.txt
               
