@@ -67,7 +67,7 @@ jobs:
     #     source: "job.sh"
     #     target: "~"
 
-    - name: Start job
+    - name: Execute job on cluster
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.CLUSTER_HOST }}
@@ -77,5 +77,18 @@ jobs:
           rm output.txt
           rm error.txt
           job_id=$(sbatch job.sh | grep -oP '[0-9]*')
-          echo $job_id
-    
+          completed=false
+          while [ "$completed" = false ]; do
+              job_status=$(scontrol show job $job_id)
+              if [[ "$job_status" == *"COMPLETED"* ]]; then
+                  completed=true
+              else
+                  sleep 0.1
+              fi
+          done
+          
+          echo "DONE"
+
+    - name: Get results
+      run: echo "GETTIGN RESULTS"
+              
