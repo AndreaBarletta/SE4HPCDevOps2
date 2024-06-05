@@ -93,6 +93,9 @@ jobs:
           done
           
           echo "DONE"
+          pwd
+          cat output.txt
+          cat error.txt
 
     - name: Get output file
       uses: nicklasfrahm/scp-action@main
@@ -102,8 +105,8 @@ jobs:
         username: ${{ secrets.CLUSTER_USERNAME }}
         insecure_password: ${{ secrets.CLUSTER_PASSWORD }}
         fingerprint: ${{ secrets.CLUSTER_FINGERPRINT }}
-        source: ~/output.txt
-        target: ~/output.txt
+        source: output.txt
+        target: output.txt
           
     - name: Get error file
       uses: nicklasfrahm/scp-action@main
@@ -113,8 +116,8 @@ jobs:
           username: ${{ secrets.CLUSTER_USERNAME }}
           insecure_password: ${{ secrets.CLUSTER_PASSWORD }}
           fingerprint: ${{ secrets.CLUSTER_FINGERPRINT }}
-          source: ~/error.txt
-          target: ~/error.txt
+          source: error.txt
+          target: error.txt
 
     - name: Print output and errors
       run: |
