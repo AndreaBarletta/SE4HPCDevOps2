@@ -1,4 +1,4 @@
-name: Test and container building
+name: Run tests, build the container, push it on the cluster and run job
 
 on: [push, pull_request]
 
@@ -93,6 +93,9 @@ jobs:
           done
           
           echo "DONE"
+          pwd
+          cat output.txt
+          cat error.txt
 
     - name: Get output file
       uses: nicklasfrahm/scp-action@main
