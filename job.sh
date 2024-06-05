@@ -20,7 +20,4 @@ BIND_PATH=$(pwd)
 MAIN_PATH="/usr/local/SE4HPCDevOps2/build"
 
 # Run
-singularity exec --bind /scratch_local:/scratch_local $SIF_FILE mpirun -np $NUM_PROCESSES -wdir $MAIN_PATH main > ~/output.txt 2> ~/error.txt
-
-
-
+mpirun -np $NUM_PROCESSES singularity exec --bind /scratch_local:/scratch_local --pwd $MAIN_PATH $SIF_FILE ./main > ~/output.txt 2> ~/error.txt
