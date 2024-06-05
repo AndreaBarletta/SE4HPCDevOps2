@@ -13,17 +13,17 @@ jobs:
       with:
         submodules: recursive  
 
-    - name: Setup MPI for running tests in action
+    - name: Setup MPI for running tests in the action environment
       uses: mpi4py/setup-mpi@v1
       
-    - name: Build
+    - name: Build tests
       run: ./build.sh
 
-    - name: Run tests
+    - name: Run tests in the action environment
       working-directory: ./build
       run: ./test_multiplication
 
-    - name: Install Singularity
+    - name: Install Singularity in the action environment
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential libseccomp-dev pkg-config squashfs-tools cryptsetup
@@ -46,11 +46,11 @@ jobs:
         sudo make
         sudo make install
         
-    - name: Build container
+    - name: Build the Singularity Container
       run: sudo singularity build container.sif container.def    
 
 
-    - name: Push container to cluster
+    - name: Push the Singularity Container to the cluster
       uses: nicklasfrahm/scp-action@main
       with:
           direction: upload
@@ -61,7 +61,7 @@ jobs:
           source: container.sif
           target: container.sif
         
-    - name: Push SLURM job file to cluster
+    - name: Push the SLURM job.sh file to the cluster
       uses: nicklasfrahm/scp-action@main
       with:
           direction: upload
@@ -72,7 +72,7 @@ jobs:
           source: job.sh
           target: job.sh
 
-    - name: Execute job on cluster
+    - name: Execute job on the cluster and wait for its completion
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.CLUSTER_HOST }}
@@ -94,7 +94,7 @@ jobs:
           
           echo "DONE"
 
-    - name: Get output file
+    - name: Get output file from the cluster
       uses: nicklasfrahm/scp-action@main
       with:
         direction: download
@@ -105,7 +105,7 @@ jobs:
         source: output.txt
         target: output.txt
           
-    - name: Get error file
+    - name: Get error file from the cluster
       uses: nicklasfrahm/scp-action@main
       with:
           direction: download
@@ -116,15 +116,15 @@ jobs:
           source: error.txt
           target: error.txt
 
-    - name: Print output and errors
+    - name: Print output and errors files
       run: |
-        echo "==================================="
+        echo "========================================================================"
         echo "Output"
-        echo "==================================="
+        echo "========================================================================"
         cat output.txt
-        echo "==================================="
+        echo "========================================================================"
         echo "Errors"
-        echo "==================================="
+        echo "========================================================================"
         cat error.txt
 
     - name: Add output and error files to repo
